@@ -95,6 +95,14 @@ class Transcriber:
                 if part["text"] != "":
                     processed_result += part["text"] + "\n"
 
+        elif self.args.output_type == "audacitylabels":
+            for _, res in enumerate(result):
+                if not "result" in res:
+                    continue
+                words = res["result"]
+                for w in words:
+                    processed_result += f"{w['start']:0.3f}\t{w['end']:0.3f}\t{w['word']}\n"
+
         elif self.args.output_type == "json":
             monologues = {"schemaVersion":"2.0", "monologues":[], "text":[]}
             for part in result:
